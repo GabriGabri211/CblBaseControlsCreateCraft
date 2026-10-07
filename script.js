@@ -1,4 +1,4 @@
-const WEBHOOK_API = "https://YOUR-BACKEND.example.com";
+const WEBHOOK_API = "https://discord.com/api/webhooks/1557427533241131088/_jhjZbHdHVyZ4C3PrUrAIEjus3qJWCkLNWJWPdRenOmK7PsetsVUxUrlCYef5jsotH3V";
 
 const messages = document.getElementById("messages");
 const form = document.getElementById("messageForm");
