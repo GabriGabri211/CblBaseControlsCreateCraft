@@ -1,16 +1,16 @@
-const WEBHOOK_API = "https://discord.com/api/webhooks/1557427533241131088/_jhjZbHdHVyZ4C3PrUrAIEjus3qJWCkLNWJWPdRenOmK7PsetsVUxUrlCYef5jsotH3V";
+const WEBHOOK_URL = "PASTE_YOUR_WEBHOOK_URL_HERE";
 
 const messages = document.getElementById("messages");
 const form = document.getElementById("messageForm");
 const input = document.getElementById("messageInput");
 const status = document.getElementById("status");
 
+status.textContent = "Connected";
+status.style.color = "#4ade80";
+
 function addMessage(text, type) {
   const empty = document.querySelector(".empty");
-
-  if (empty) {
-    empty.remove();
-  }
+  if (empty) empty.remove();
 
   const message = document.createElement("div");
   message.className = `message ${type}`;
@@ -24,44 +24,31 @@ form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   const text = input.value.trim();
-
   if (!text) return;
 
   addMessage(text, "outgoing");
   input.value = "";
 
   try {
-    const response = await fetch(`${WEBHOOK_API}/send`, {
+    const response = await fetch(WEBHOOK_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        message: text
+        message: text,
+        timestamp: new Date().toISOString()
       })
     });
 
     if (!response.ok) {
-      throw new Error("Request failed");
+      throw new Error(`HTTP ${response.status}`);
     }
+
+    addMessage("Message sent ✓", "incoming");
+
   } catch (error) {
     console.error(error);
-    addMessage("Could not send message.", "incoming");
+    addMessage("Failed to send message.", "incoming");
   }
 });
-
-async function checkConnection() {
-  try {
-    const response = await fetch(`${WEBHOOK_API}/health`);
-
-    if (response.ok) {
-      status.textContent = "Connected";
-      status.style.color = "#4ade80";
-    }
-  } catch {
-    status.textContent = "Disconnected";
-    status.style.color = "#f87171";
-  }
-}
-
-checkConnection();
