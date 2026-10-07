@@ -1,0 +1,3 @@
+<body>
+<h1>Cobblestone Labs Base Management Panel</h1>
+</body>
