@@ -1,4 +1,4 @@
-const WEBHOOK_URL = "https://discord.com/api/webhooks/1557427533241131088/_jhjZbHdHVyZ4C3PrUrAIEjus3qJWCkLNWJWPdRenOmK7PsetsVUxUrlCYef5jsotH3V";
+const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1557427533241131088/_jhjZbHdHVyZ4C3PrUrAIEjus3qJWCkLNWJWPdRenOmK7PsetsVUxUrlCYef5jsotH3V";
 
 const messages = document.getElementById("messages");
 const form = document.getElementById("messageForm");
@@ -30,25 +30,24 @@ form.addEventListener("submit", async (event) => {
   input.value = "";
 
   try {
-    const response = await fetch(WEBHOOK_URL, {
+    const response = await fetch(DISCORD_WEBHOOK_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        message: text,
-        timestamp: new Date().toISOString()
+        content: text
       })
     });
 
     if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
+      throw new Error(`Discord returned ${response.status}`);
     }
 
-    addMessage("Message sent ✓", "incoming");
+    addMessage("Sent to Discord ✓", "incoming");
 
   } catch (error) {
     console.error(error);
-    addMessage("Failed to send message.", "incoming");
+    addMessage("Failed to send to Discord.", "incoming");
   }
 });
