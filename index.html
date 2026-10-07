@@ -7,6 +7,15 @@
     <link rel="icon" type="image/png" href="cobble.png">
 </head>
 <body>
-   <input></input> 
+<button id="test">Send Test Command</button>
+
+<pre id="output">Waiting...</pre>
+
+<script>
+document.getElementById("test").addEventListener("click", async () => {
+    document.getElementById("output").textContent =
+        "Button clicked!";
+});
+</script>
 </body>
 </html>
